@@ -4,8 +4,8 @@ var LM = angular.module('LM', ['LM.services','LM.directives','LM.filters','ngSan
 
 // constant of link
 LM.link = {
-	"getLinksUrl": "http://localhost/duy-long-links-services/links.json",
-	"saveLinksUrl": "http://localhost/duy-long-links-services/save.php",
+	"getLinksUrl": "http://html.sunovisio.com/iss001/data/links.json",
+	"saveLinksUrl": "http://html.sunovisio.com/iss001/data/save.php",
 	"followType": angular.element('#dl-follow-type').val(),
 	"pageRank": parseInt(angular.element('#dl-pr').val()),
 	"tabId": null,
