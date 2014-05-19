@@ -18,18 +18,6 @@
 		"pageRank": 3
 	},
 	{
-		"url": "http://12a.2kool4u.net",
-		"isAvailable": true,
-		"follow": false,
-		"pageRank": 0
-	},
-	{
-		"url": "http://12k84.com",
-		"isAvailable": true,
-		"follow": true,
-		"pageRank": 0
-	},
-	{
 		"url": "http://12k84.webvang.vn",
 		"isAvailable": true,
 		"follow": false,
@@ -120,12 +108,6 @@
 		"pageRank": 3
 	},
 	{
-		"url": "http://closure-compiler.appspot.com/home",
-		"isAvailable": true,
-		"follow": true,
-		"pageRank": 0
-	},
-	{
 		"url": "http://dean.edwards.name/packer/",
 		"isAvailable": true,
 		"follow": true,
@@ -136,17 +118,5 @@
 		"isAvailable": true,
 		"follow": true,
 		"pageRank": 3
-	},
-	{
-		"url": "http://mypropertyexchange.com.au/",
-		"isAvailable": true,
-		"follow": false,
-		"pageRank": 0
-	},
-	{
-		"url": "https://cibostudios.beanstalkapp.com/",
-		"isAvailable": true,
-		"follow": true,
-		"pageRank": 0
 	}
 ]

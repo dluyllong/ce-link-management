@@ -4,14 +4,16 @@ var LM = angular.module('LM', ['LM.services','LM.directives','LM.filters','ngSan
 
 // constant of link
 LM.link = {
-	"getLinksUrl": "http://html.sunovisio.com/iss001/data/links.json",
-	"saveLinksUrl": "http://html.sunovisio.com/iss001/data/save.php",
+	"serviceUrl": "",	//	http://localhost/test/ce-link-management/data/
 	"followType": angular.element('#dl-follow-type').val(),
 	"pageRank": parseInt(angular.element('#dl-pr').val()),
+	"loadData": "LOAD_DATA",
+	"failedData": "FAILED_DATA",
 	"tabId": null,
 	"winId": null,
 	"dataLoaded": "DATA_LOADED",
 	"openHandleLinkForm": "OPEN_HANDLE_LINK_FORM",
+	"openInsertServiceForm": "OPEN_INSERT_SERVICE_FORM",
 	"InsertLink": "INSERT_LINK",
 	"EditLink": "EDIT_LINK",
 	"deteteCallback": "DELETE_CALLBACK",
@@ -21,7 +23,8 @@ LM.link = {
 	"pageRanks": [0,1,2,3,4,5,6,7,8,9,10],
 	"getLinksFilter": "GET_LINKS_FILTER",
 	"loading": "LOADING",
-	"loaded": "LOADED"
+	"loaded": "LOADED",
+	"storedUrl": "STORED_URL"
 };
 
 chrome.tabs.getCurrent( function (tab) {
@@ -34,19 +37,74 @@ chrome.windows.getCurrent( function(win) {
 // for Handle Page
 LM.controller('MainController', function($scope, $element, Links) {
 	
-	var data = Links.getData();
-	data.then(function(result) {
-		$scope.$broadcast(LM.link.dataLoaded, true);
-	});
+	$scope.isDataLoaded = false;
 	
-	var loadingLayer = $element.find('#loading-layer');
+	console.log(localStorage.getItem(LM.link.storedUrl));
+	
+	LM.link.serviceUrl =  localStorage.getItem(LM.link.storedUrl);
+	
+	if ( LM.link.serviceUrl ) {
+		$scope.loading = true;
+		loadData();
+		// localStorage.removeItem("STORED_URL");
+		
+	}
+	
+	// LOAD DATA
+	function loadData () {
+		$scope.loading = true;
+		var data = Links.getData();
+		data.then(function(result) {
+			localStorage.setItem(LM.link.storedUrl, LM.link.serviceUrl);
+			$scope.$broadcast(LM.link.dataLoaded, true);
+			$scope.isDataLoaded = true;
+			$scope.loading = false;
+		});
+	}
+	
+	// DISABLE ACTIONS
 	$scope.$on(LM.link.loading, function () {
 		$scope.loading = true;
 	});
 	
+	// ENABLE ACTIONS
 	$scope.$on(LM.link.loaded, function () {
 		$scope.loading = false;
 	});
+	
+	// CALL DATA FUNCTION
+	$scope.$on(LM.link.loadData, function () {
+		$scope.loading = true;
+		if ( localStorage.getItem(LM.link.storedUrl) ) {
+			localStorage.setItem(LM.link.storedUrl, LM.link.serviceUrl);
+			location.reload();
+		} else {
+			loadData();
+		}
+	});
+	
+	// RELOAD PAGE
+	$scope.$on(LM.link.failedData, function () {
+		console.log('failed');
+		location.reload();
+	});
+	
+});
+
+// Insert Link for Handle Data
+LM.controller('DataServiceController', function ($scope, $element) {
+	
+	$scope.$on(LM.link.openInsertServiceForm, function(event, data) {
+		$element.modal('show');
+	});
+	
+	$scope.submit = function () {
+		LM.link.serviceUrl = $scope.serviceHost;
+		
+		$scope.$emit(LM.link.loadData, true);
+		$element.modal('hide');
+		
+	};
 	
 });
 

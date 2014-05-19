@@ -16,7 +16,7 @@ nav,
 
 .dropdown-menu a{cursor:pointer}
 
-#loading-layer{position:fixed;z-index:99999;background:url(../img/blank.png);left:0;top:0;right:0;bottom:0}
+#loading-layer{position:fixed;z-index:99998;background:url(../img/blank.png) #fff;opacity:0.7;left:0;top:0;right:0;bottom:0}
 
 .alert.hide{display:none}
 

@@ -9,16 +9,23 @@ ServicesModule.factory('Links',function($http, $q, $rootScope) {
 		getData: function() {
 			var deferred = $q.defer();
 	
-			$http.get(LM.link.getLinksUrl).success(function(result){
+			$http.get(LM.link.serviceUrl + 'links.json').success(function(result){
 				deferred.resolve(result);
-				data = result;
+				
+				if ( typeof result == 'object' && result.length > 0 ) {
+					data = result;
+				} else {
+					$rootScope.$broadcast(LM.link.failedData, true);
+				}
+			}).error(function(result){
+				$rootScope.$broadcast(LM.link.failedData, true);
 			});
 	
 			return deferred.promise;
 		},
 		save: function (type) {
 			$http({
-				url: LM.link.saveLinksUrl,
+				url: LM.link.serviceUrl + 'save.php',
 					method: "POST",
 					headers: {'Content-Type': 'application/x-www-form-urlencoded'},
 					data: $.param({data:JSON.stringify(angular.copy(data), null, '\t')})

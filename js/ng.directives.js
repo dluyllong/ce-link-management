@@ -51,6 +51,14 @@ Directives.directive('insertLink', [ '$rootScope', function ($rootScope) {
 	};
 }]);
 
+Directives.directive('insertService', [ '$rootScope', function ($rootScope) {
+	return function(scope, element, attrs) {
+		element.on('click', function() {
+			$rootScope.$broadcast(LM.link.openInsertServiceForm, false);
+	    });
+	};
+}]);
+
 Directives.directive('backHome', [ function () {
 	return function(scope, element, attrs) {
 		element.on('click', function() {
