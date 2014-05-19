@@ -1,0 +1,152 @@
+[
+	{
+		"url": "http://google.com",
+		"isAvailable": true,
+		"follow": true,
+		"pageRank": 9
+	},
+	{
+		"url": "http://yahoo.com",
+		"isAvailable": true,
+		"follow": true,
+		"pageRank": 3
+	},
+	{
+		"url": "http://123nhadat.com",
+		"isAvailable": true,
+		"follow": true,
+		"pageRank": 3
+	},
+	{
+		"url": "http://12a.2kool4u.net",
+		"isAvailable": true,
+		"follow": false,
+		"pageRank": 0
+	},
+	{
+		"url": "http://12k84.com",
+		"isAvailable": true,
+		"follow": true,
+		"pageRank": 0
+	},
+	{
+		"url": "http://12k84.webvang.vn",
+		"isAvailable": true,
+		"follow": false,
+		"pageRank": 3
+	},
+	{
+		"url": "http://123nhadat.com",
+		"isAvailable": true,
+		"follow": false,
+		"pageRank": 3
+	},
+	{
+		"url": "http://12tn2cn.forumvi.net",
+		"isAvailable": false,
+		"follow": true,
+		"pageRank": 3
+	},
+	{
+		"url": "http://36giay.com",
+		"isAvailable": false,
+		"follow": true,
+		"pageRank": 1
+	},
+	{
+		"url": "http://409linhnam.com",
+		"isAvailable": true,
+		"follow": false,
+		"pageRank": 3
+	},
+	{
+		"url": "https://translate.google.com.vn/?hl=en",
+		"isAvailable": true,
+		"follow": true,
+		"pageRank": 0
+	},
+	{
+		"url": "http://www.csscompressor.com/",
+		"isAvailable": true,
+		"follow": true,
+		"pageRank": 3
+	},
+	{
+		"url": "http://json.parser.online.fr/",
+		"isAvailable": true,
+		"follow": true,
+		"pageRank": 3
+	},
+	{
+		"url": "http://imgur.com/",
+		"isAvailable": true,
+		"follow": false,
+		"pageRank": 0
+	},
+	{
+		"url": "http://littlesvr.ca/apng/assembler/assembler.php",
+		"isAvailable": true,
+		"follow": true,
+		"pageRank": 0
+	},
+	{
+		"url": "http://css-tricks.com/examples/ButtonMaker/",
+		"isAvailable": true,
+		"follow": false,
+		"pageRank": 3
+	},
+	{
+		"url": "http://css3generator.com/",
+		"isAvailable": true,
+		"follow": false,
+		"pageRank": 3
+	},
+	{
+		"url": "http://javascriptobfuscator.com/",
+		"isAvailable": true,
+		"follow": true,
+		"pageRank": 3
+	},
+	{
+		"url": "http://ajaxload.info/",
+		"isAvailable": true,
+		"follow": true,
+		"pageRank": 1
+	},
+	{
+		"url": "https://ghost.org/download/",
+		"isAvailable": true,
+		"follow": false,
+		"pageRank": 3
+	},
+	{
+		"url": "http://closure-compiler.appspot.com/home",
+		"isAvailable": true,
+		"follow": true,
+		"pageRank": 0
+	},
+	{
+		"url": "http://dean.edwards.name/packer/",
+		"isAvailable": true,
+		"follow": true,
+		"pageRank": 3
+	},
+	{
+		"url": "http://getbootstrap.com/components/",
+		"isAvailable": true,
+		"follow": true,
+		"pageRank": 3
+	},
+	{
+		"url": "http://mypropertyexchange.com.au/",
+		"isAvailable": true,
+		"follow": false,
+		"pageRank": 0
+	},
+	{
+		"url": "https://cibostudios.beanstalkapp.com/",
+		"isAvailable": true,
+		"follow": true,
+		"pageRank": 0
+	}
+]

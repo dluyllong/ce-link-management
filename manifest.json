@@ -1,0 +1,15 @@
+{
+	"name": "Link Management",
+	"version": "1.0.0",
+	"author": "Duy Long",
+	"description": "Support SEO for link management",
+	"icons": { "16": "img/icon16.png", "48": "img/icon48.png", "128": "img/icon128.png" },
+	"background": {
+		"scripts": ["js/ce.background.js"]
+	},
+	"browser_action": {
+		"default_icon": "img/icon19.png"
+	},
+	"permissions": [ "cookies", "tabs", "http://*/*", "https://*/*" ],
+	"manifest_version": 2
+}

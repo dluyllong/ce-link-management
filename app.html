@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="LM">
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Link Management</title>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css"/>
+	<link rel="stylesheet" type="text/css" href="css/modify.css"/>
+</head>
+<body ng-controller="MainController">
+
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+	<div class="container-fluid">
+	
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="javascript:void(0)" back-home><span class="glyphicon glyphicon-home"></span></a>
+		</div>
+
+		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+			<form class="navbar-form navbar-left" role="search" ng-controller="SearchController">
+				<div class="form-group">
+					<div class="btn-group">
+						<button type="button" class="btn btn-default dropdown-toggle page-rank" data-toggle="dropdown"><span class="type">PageRank</span> <span class="caret"></span></button>
+						<ul class="dropdown-menu" role="menu">
+                        	<li ng-repeat="i in pageRanks"><a ng-click="changePageRank(i)">{{i}}</a></li>
+						</ul>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="btn-group">
+						<button type="button" class="btn btn-default dropdown-toggle follow" data-toggle="dropdown"><span class="type">Follow Type</span> <span class="caret"></span></button>
+						<ul class="dropdown-menu" role="menu">
+							<li><a ng-click="changeToType(0, $event)">Nofollow</a></li>
+							<li><a ng-click="changeToType(1, $event)">Dofollow</a></li>
+						</ul>
+					</div>
+				</div>
+                <div class="form-group">
+					<div class="btn-group">
+						<button type="button" class="btn btn-default dropdown-toggle is-avai" data-toggle="dropdown"><span class="type">Is Available?</span> <span class="caret"></span></button>
+						<ul class="dropdown-menu" role="menu">
+							<li><a ng-click="changeToAvai(1, $event)">Available</a></li>
+							<li><a ng-click="changeToAvai(0, $event)">Disabled</a></li>
+						</ul>
+					</div>
+				</div>
+			</form>
+			
+			<div class="navbar-form navbar-right">
+				<button insert-link type="button" class="btn btn-primary">Insert link <span class="glyphicon glyphicon-link"></span></button>
+				<button close-links type="button" class="btn btn-danger">Close tabs <span class="glyphicon glyphicon-remove-circle"></span></button>
+				<button open-links type="button" class="btn btn-info">Open links <span class="glyphicon glyphicon-share-alt"></span></button>
+			</div>
+		</div><!--/.navbar-collapse-->
+		
+	</div><!--/.container-fluid-->
+</nav><!--/top-nav-->
+
+<section class="container-fluid" id="container">
+	
+	<div id="dl-links-list"ng-controller="LinksListController">
+	
+		<table id="data-link-table" class="table table-striped table-hover table-condensed table-responsive">
+			<colgroup>
+				<col>
+				<col width="1">
+				<col width="1">
+				<col width="1">
+				<col width="1">
+			</colgroup>
+			<thead>
+				<tr>
+					<th>URL</th>
+					<th>Available</th>
+					<th>Follow</th>
+					<th>PageRank <span class="glyphicon glyphicon-chevron-down"></span></th>
+					<th>Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr ng-controller="LinkItemController" ng-repeat="link in groupLinks[currentPage-1] | orderBy:['-pageRank']">
+					<td class="link-url"><a href="{{link.url}}" class="link-item" target="_blank">{{link.url}}</a></td>
+					<td ng-bind-html="link.isAvailable | bool"></td>
+					<td ng-bind-html="link.follow | bool"></td>
+					<td>{{ link.pageRank }}</td>
+					<td>
+                    	<button type="button" class="btn btn-success btn-xs" ng-click="edit()"><span class="glyphicon glyphicon-wrench"></span></button>
+                    	<button type="button" class="btn btn-danger btn-xs" ng-click="remove()"><span class="glyphicon glyphicon-trash"></span></button></td>
+				</tr>
+			</tbody> 
+			<tfoot>
+				<tr>
+					<td>
+						<div class="btn-group input-group" change-pagesize>
+							<span class="input-group-addon">Page size:</span>
+							<button type="button" class="btn btn-default dropdown-toggle page-size" data-toggle="dropdown" value="{{pageSize}}" ng-model="pageSize"><span class="type">{{pageSize}}</span> <span class="caret"></span></button>
+							<ul class="dropdown-menu" role="menu">
+                            	<li ng-repeat="number in pageSizes"><a ng-click="changeSizeTo(number)">{{number}}</a></li>
+							</ul>
+						</div>
+					</td>
+					<td colspan="4" align="right">
+						<div class="input-group btn-group pull-right">
+							<button type="button" class="btn btn-info" ng-disabled="currentPage == 1" ng-click="changeSlide(-1)"><span class="glyphicon glyphicon-chevron-left"></span></button>	
+							<span class="input-group-addon">{{currentPage}} / {{pages}}</span>
+							<button type="button" class="btn btn-info" ng-disabled="currentPage >= pages" ng-click="changeSlide(1)"><span class="glyphicon glyphicon-chevron-right"></span></button>
+						</div>
+					</td>
+				</tr>
+			</tfoot>
+		</table>
+	
+	</div><!--/dl-links-list-->
+	
+</section><!--/container-section-->
+
+<div class="modal fade" id="modal-handle-link" ng-controller="HandleLinkController">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Insert Link</h4>
+			</div><!--/modal-header-->
+			<div class="modal-body">
+				<form class="form-horizontal" name="handleLinkForm" role="form">
+					<div class="alert alert-danger" ng-show="isUrlExist">
+						Duplicate Name Exists
+			  		</div>
+					<div class="form-group">
+						<label for="inputUrl" class="col-sm-2 control-label">URL</label>
+						<div class="col-sm-10">
+							<input required ng-model="url" type="username" class="form-control" id="inputUrl" placeholder="http://" value="" pattern=".{7,}">
+						</div>
+					</div><!--/URL-->
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Available</label>
+						<div class="col-sm-10">
+							<div class="btn-group" data-toggle="buttons">
+								<label class="btn btn-primary turn-avai-off" ng-class="{active: !isAvailable}" ng-click="turnAvai(0)">
+									<input type="radio" name="inputAvailable">
+									No
+								</label>
+								<label class="btn btn-primary turn-avai-on" ng-class="{active: isAvailable}" ng-click="turnAvai(1)">
+									<input type="radio" name="inputAvailable">
+									Yes
+								</label>
+							</div>
+						</div>
+					</div><!--/Available-->
+					<div class="form-group">
+						<label class="col-sm-2 control-label">Follow</label>
+						<div class="col-sm-10">
+							<div class="btn-group" data-toggle="buttons">
+								<label class="btn btn-primary no-follow" ng-class="{active: !follow}" ng-click="doFollow(0)">
+									<input type="radio" name="inputFollow">
+									NoFollow
+								</label>
+								<label class="btn btn-primary do-follow" ng-class="{active: follow}" ng-click="doFollow(1)">
+									<input type="radio" name="inputFollow">
+									DoFollow
+								</label>
+							</div>
+						</div>
+					</div><!--/Follow-->
+                    <div class="form-group">
+						<label class="col-sm-2 control-label">PageRank</label>
+						<div class="col-sm-10">
+							<div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle page-rank" data-toggle="dropdown" ng-model="pageRank"><span class="type">0</span> <span class="caret"></span></button>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li ng-repeat="i in pageRanks"><a ng-click="changePageRank(i)">{{i}}</a></li>
+                                </ul>
+                            </div>
+						</div>
+					</div><!--/PageRank-->
+					<div class="form-group">
+						<div class="col-sm-offset-2 col-sm-10">
+                            <button type="input" ng-click="submit()" class="btn btn-success">Submit</button>
+                        </div>
+					</div><!--/submit-->
+				</form>
+			</div>
+		</div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div><!--/#modal-handle-link-->
+
+<div id="loading-layer" ng-show="loading"></div>
+
+<script src="lib/jquery.min.js"></script>
+<script src="lib/bootstrap.min.js"></script>
+<script src="lib/underscore.min.js"></script>
+<script src="lib/angular.min.js"></script>
+<script src="lib/angular.sanitize.min.js"></script>
+
+<script src="js/ng.services.js"></script>
+<script src="js/ng.filter.js"></script>
+<script src="js/ng.directives.js"></script>
+
+<script src="js/app.js"></script>
+
+</body>
+</html>
